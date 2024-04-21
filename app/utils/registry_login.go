@@ -4,8 +4,8 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/mubashiroliyantakath/docker-jobs/app/models"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/devletix/devops/docker-jobs/app/models"
 )
 
 // Log into the Gitlab Container Registry for the project
@@ -14,7 +14,6 @@ func CIRegistryLogin() {
 }
 
 func LoginToRegistry(registry models.Registry) {
-	log.Infof("Logging into registry: %v", registry)
 	// okBody, err := client.DockerClient.RegistryLogin(context.Background(), registry.AuthConfig)
 	// if err != nil {
 	// 	log.Fatal(err)
@@ -24,8 +23,9 @@ func LoginToRegistry(registry models.Registry) {
 
 	LogoutOfRegistry(registry)
 
+	log.Infof("Logging into registry: %v", registry)
 	loginCommand := []string{"docker", "login", "-u", registry.AuthConfig.Username, "-p", registry.AuthConfig.Password, registry.AuthConfig.ServerAddress}
-	log.Infof("Running command: %v", loginCommand)
+	log.Debugf("Running command: %v", loginCommand)
 	cmd := exec.Command(loginCommand[0], loginCommand[1:]...)
 	li, err := cmd.CombinedOutput()
 	if err != nil {
@@ -41,7 +41,7 @@ func LoginToRegistry(registry models.Registry) {
 }
 
 func LogoutOfRegistry(registry models.Registry) {
-	log.Infof("Logging out of registry: %v", registry.AuthConfig.ServerAddress)
+	log.Infof("Cleaning up previous registry credentials: %v", registry.AuthConfig.ServerAddress)
 	logoutCommand := []string{"docker", "logout", registry.AuthConfig.ServerAddress}
 	cmd := exec.Command(logoutCommand[0], logoutCommand[1:]...)
 	output, err := cmd.CombinedOutput()

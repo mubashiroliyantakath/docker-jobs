@@ -3,8 +3,8 @@ package utils
 import (
 	"strings"
 
+	"github.com/mubashiroliyantakath/docker-jobs/app/models"
 	"github.com/spf13/viper"
-	"gitlab.com/devletix/devops/docker-jobs/app/models"
 )
 
 var (

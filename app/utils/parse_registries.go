@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/docker/docker/api/types/registry"
+	"github.com/mubashiroliyantakath/docker-jobs/app/models"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/devletix/devops/docker-jobs/app/models"
 )
 
 func ParseRegistries(repos string) []models.Registry {

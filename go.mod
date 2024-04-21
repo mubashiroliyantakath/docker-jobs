@@ -1,4 +1,4 @@
-module gitlab.com/devletix/devops/docker-jobs
+module github.com/mubashiroliyantakath/docker-jobs
 
 go 1.22.2
 

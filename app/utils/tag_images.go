@@ -4,8 +4,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/mubashiroliyantakath/docker-jobs/app/models"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/devletix/devops/docker-jobs/app/models"
 )
 
 func RetagImage(image string, tags []string, registries []models.Registry) []string {

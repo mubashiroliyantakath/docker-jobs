@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
+	"github.com/mubashiroliyantakath/docker-jobs/app/utils"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/devletix/devops/docker-jobs/app/utils"
 )
 
 func init() {
@@ -33,20 +33,20 @@ func main() {
 		log.Fatal("No new registries defined.")
 	}
 
+	for _, registry := range registries {
+		utils.LoginToRegistry(registry)
+	}
+
 	for _, image := range images {
 		_ = utils.RetagImage(image, utils.AppConfig.Tags, registries)
 		// tag image to the ones in the returned list
 
 	}
 
-	// for _, registry := range registries {
-	// 	utils.LoginToRegistry(registry)
-	// }
-
-	// defer func() {
-	// 	for _, registry := range registries {
-	// 		utils.LogoutOfRegistry(registry)
-	// 	}
-	// }()
+	defer func() {
+		for _, registry := range registries {
+			utils.LogoutOfRegistry(registry)
+		}
+	}()
 
 }
